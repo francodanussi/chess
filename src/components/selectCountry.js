@@ -27,17 +27,11 @@ export default class selectCountry extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {countrySelected : 'AR'}
   }
 
   handleChange = (event) => {
-    console.log(event)
-    this.setState = prevState => {
-      return {
-        ...prevState,
-        countrySelected: event.value
-      }
-    }
+    this.setState({countrySelected: event})
   }
 
   handleClick = () => {
