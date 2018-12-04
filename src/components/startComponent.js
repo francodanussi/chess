@@ -1,26 +1,32 @@
 import React, { Component } from 'react'
 import logo from '../logo.svg'
 
+export default class startComponent extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-const style = {
-  margin: "20px"
-}
-const startComponent = props => {
-  return (<div className='App'>
-    <header className='App-header'>
-      <img src={require('../Fischer2.jpg')} />
-      <a
-        className='App-link'
-        href='http://localhost:3000/playGame'
-        target='_blank'
-        rel='noopener noreferrer'
-        style = {style}
-      >
-        Start Chess App
-      </a>
-    </header>
-  </div>
-  )
-}
+  loadCountryComponent = () => {
+    this.props.history.replace('/selectCountry')
+  }
 
-export default startComponent
+  render() {
+    return (
+      <div className='App'>
+        <header className='App-header'>
+          <img src={require('../Fischer2.jpg')} />
+          <a
+            className='App-link'
+            onClick={this.loadCountryComponent}
+            target='_blank'
+            rel='noopener noreferrer'
+            style = { {margin: "20px"} }
+          >
+            Start
+          </a>
+        </header>
+      </div>
+      )
+  }
+
+}
