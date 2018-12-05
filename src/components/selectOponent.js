@@ -5,6 +5,7 @@ import {
   Form,
   FormGroup,
   Input,
+  Button,
   InputGroup,
   FormFeedback,
   InputGroupAddon,
@@ -16,8 +17,9 @@ import {
   Col,
   Row
 } from 'reactstrap'
+
 import Select from 'react-select'
-import makeAnimated from 'react-select/lib/animated'
+import { List } from 'react-virtualized'
 
 export default class selectOponent extends Component {
 
@@ -27,14 +29,16 @@ export default class selectOponent extends Component {
     this.customStyles = styleObject
   }
 
-  handleChange = (event) => {
-    console.log(event)
-    this.setState = prevState => {
-      return {
-        ...prevState,
-        oponent: event.value
-      }
-    }
+  handleChange = event => {
+    this.setState({oponent: event.value})
+  }
+
+  handlePlay = () => {
+    this.props.history.push({
+      pathname : '/playChess',
+      oponent: this.state.oponent
+    })
+    // Link
   }
 
   transformPlayers = players => {
@@ -53,7 +57,7 @@ export default class selectOponent extends Component {
     // console.table(response.data.players)
     this.transformPlayers(response.data.players)
     })
-    .catch(function (error) {
+    .catch( error => {
     console.log(error)
     })
 
@@ -61,38 +65,60 @@ export default class selectOponent extends Component {
 
   render() {
     return (
-        <Col md='12' style = { {margin: "20px"}}>
+        <Col md='12' style = { {margin: '20px'} }>
           <Label>Oponents available (search usernames in chess.com)</Label>
           <FormGroup>
-            <Select styles={this.customStyles} defaultValue='oponents' name='oponents' components={makeAnimated()} onChange={this.handleChange} isMulti="isMulti" options = {this.state.players}/>
+            <Select components={{ MenuList }} styles={this.customStyles} defaultValue='oponents' name='oponents' onChange={this.handleChange} options = {this.state.players}/>
+              <Button color='danger' onClick = {this.handlePlay}>Play</Button>
           </FormGroup>
         </Col>
-
       )
   }
 
 }
 
+
+
+
+const MenuList = props => {
+  const rows = props.children
+  const rowRenderer = ({ key, index, isScrolling, isVisible, style }) => (
+    <div key={key} style={style}>{rows[index]}</div>
+  )
+
+  return (
+    <List
+      style={{ width: '100%' }}
+      width={400}
+      height={400}
+      rowHeight={40}
+      rowCount={rows.length}
+      rowRenderer={rowRenderer}
+    />
+  )
+}
+
+
 const styleObject = {
 control: (base, state) => ({
   ...base,
-  background: "#023950",
+  background: '#023950',
   // match with the menu
-  borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+  borderRadius: state.isFocused ? '3px 3px 0 0' : 3,
   // Overwrittes the different states of border
-  borderColor: state.isFocused ? "yellow" : "green",
+  borderColor: state.isFocused ? 'yellow' : 'green',
   // Removes weird border around container
   boxShadow: state.isFocused ? null : null,
-  "&:hover": {
+  '&:hover': {
     // Overwrittes the different states of border
-    borderColor: state.isFocused ? "red" : "blue"
+    borderColor: state.isFocused ? 'red' : 'blue'
   }
 }),
 menu: base => ({
   ...base,
   // override border radius to match the box
   borderRadius: 0,
-  color: "#023950",
+  color: '#023950',
   // kill the gap
   marginTop: 0
 }),

@@ -21,6 +21,7 @@ export default class startComponent extends Component {
             target='_blank'
             rel='noopener noreferrer'
             style = { {margin: "20px"} }
+            history = {this.props.history}
           >
             Start
           </a>

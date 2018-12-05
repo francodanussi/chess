@@ -30,7 +30,7 @@ export default class selectCountry extends Component {
     this.state = {countrySelected : 'AR'}
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({countrySelected: event})
   }
 
@@ -68,7 +68,7 @@ export default class selectCountry extends Component {
                           <FormGroup>
                             <ReactFlagsSelect style={{ marginTop: "4%"}} searchable={true} selectedSize={25} optionsSize={20} onSelect = {this.handleChange} defaultCountry="AR"/>
                             <Button color="danger" onClick = {this.handleClick}>OK</Button>
-                            {this.state.selected && <SelectOponent country ={this.state.countrySelected}/>}
+                            {this.state.selected && <SelectOponent history = {this.props.history} country ={this.state.countrySelected}/>}
                           </FormGroup>
                         </Col>
                       </FormGroup>
